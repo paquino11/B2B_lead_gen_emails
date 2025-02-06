@@ -26,8 +26,8 @@ A streamlit-based application that collects business information using Google Pl
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/get_info_business.git
-cd get_info_business
+git clone https://github.com/paquino11/B2B_lead_gen_emails.git
+cd B2B_lead_gen_emails
 ```
 
 2. Create and activate a virtual environment:
@@ -46,6 +46,7 @@ pip install 'crewai[tools]'
 
 4. Create a `.env` file in the root directory and add your API keys:
 ```bash
+MODEL=claude-3-5-sonnet-20240620
 GOOGLE_API_KEY=your_google_api_key_here
 ANTHROPIC_API_KEY=your_anthropic_api_key_here
 SERPER_API_KEY=your_serper_api_key_here
