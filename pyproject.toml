@@ -1,0 +1,26 @@
+[project]
+name = "get_info_business"
+version = "0.1.0"
+authors = [
+    { name = "Your Name", email = "your.email@example.com" },
+]
+description = "A package for getting business information"
+readme = "README.md"
+requires-python = ">=3.8"
+
+[project.scripts]
+get_info_business = "get_info_business.main:run"
+run_crew = "get_info_business.main:run"
+train = "get_info_business.main:train"
+replay = "get_info_business.main:replay"
+test = "get_info_business.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/get_info_business"]

@@ -1,0 +1,72 @@
+research_task:
+  description: >
+    Research the following business in Gothenburg:
+    Name: {business_name}
+    Address: {business_address}
+    Website: {business_website}
+    
+    Use the SerperDev tool to find:
+    1. Email address
+    2. Instagram profile
+    3. Facebook page
+    4. Business description/about section
+    
+    Return ONLY a valid JSON object with the found information.
+  expected_output: >
+    {
+      "email": "found_email or null",
+      "instagram": "found_instagram or null",
+      "facebook": "found_facebook or null",
+      "about": "business_description"
+    }
+  agent: researcher
+
+
+email_task:
+  description: >
+    Create a personalized sales email for the following business:
+    Type: {business_type}
+    Name: {business_name}
+    About: {business_about}
+    
+    Write a compelling email that:
+    1. Addresses their specific business type and needs
+    2. References their business information
+    3. Has a clear value proposition
+    4. Includes a call to action
+    
+    Return ONLY a valid JSON object with the email subject and body.
+  expected_output: >
+    {
+      "email_subject": "Engaging subject line",
+      "email_body": "Personalized email content"
+    }
+  agent: copywriter
+
+
+
+reporting_task:
+  description: >
+    Take the research results and email content, then format them as a valid JSON object.
+    Include the following fields:
+    - email (from research)
+    - instagram (from research)
+    - facebook (from research)
+    - about (from research)
+    - sales_email (from email task)
+  expected_output: >
+    {
+      "email": "found_email or null",
+      "instagram": "found_instagram or null",
+      "facebook": "found_facebook or null",
+      "about": "business_description",
+      "sales_email": {
+        "email_subject": "subject",
+        "email_body": "body"
+      }
+    }
+  agent: reporting_analyst
+
+
+
+
