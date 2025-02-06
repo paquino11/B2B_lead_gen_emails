@@ -119,7 +119,7 @@ def run():
     if len(sys.argv) > 1:
         business_type = sys.argv[1]
     else:
-        business_type = "gym"  # Default fallback value
+        business_type = "bar"  # Default fallback value
         
     try: 
         businesses = load_business_data(business_type)

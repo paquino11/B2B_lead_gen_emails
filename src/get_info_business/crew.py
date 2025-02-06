@@ -6,17 +6,11 @@ from crewai_tools import SerperDevTool
 from dotenv import load_dotenv
 load_dotenv()
 
-# If you want to run a snippet of code before or after the crew starts, 
-# you can use the @before_kickoff and @after_kickoff decorators
-# https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
 
 @CrewBase
 class GetInfoBusiness():
 	"""GetInfoBusiness crew"""
 
-	# Learn more about YAML configuration files here:
-	# Agents: https://docs.crewai.com/concepts/agents#yaml-configuration-recommended
-	# Tasks: https://docs.crewai.com/concepts/tasks#yaml-configuration-recommended
 	agents_config = 'config/agents.yaml'
 	tasks_config = 'config/tasks.yaml'
 	output_file = None
@@ -24,8 +18,7 @@ class GetInfoBusiness():
 	os.environ['SERPER_API_KEY'] = os.getenv('SERPER_API_KEY')
 
 	serper_tool = SerperDevTool()
-	# If you would like to add tools to your agents, you can learn more about it here:
-	# https://docs.crewai.com/concepts/agents#agent-tools
+
 
 	def set_output_file(self, filename):
 		self.output_file = filename
@@ -69,7 +62,8 @@ class GetInfoBusiness():
 	@task
 	def reporting_task(self) -> Task:
 		return Task(
-			config=self.tasks_config['reporting_task']
+			config=self.tasks_config['reporting_task'],
+			context=[self.research_task(), self.email_task()]
 		)
 
 

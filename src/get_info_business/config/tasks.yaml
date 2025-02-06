@@ -1,20 +1,22 @@
 research_task:
   description: >
-    Research the following business in Gothenburg:
+    Research the following business:
     Name: {business_name}
     Address: {business_address}
     Website: {business_website}
     
     Use the SerperDev tool to find:
     1. Email address
-    2. Instagram profile
-    3. Facebook page
-    4. Business description/about section
+    2. Website
+    3. Instagram profile
+    4. Facebook page
+    5. Business description/about section
     
     Return ONLY a valid JSON object with the found information.
   expected_output: >
     {
       "email": "found_email or null",
+      "website": "found_website or null",
       "instagram": "found_instagram or null",
       "facebook": "found_facebook or null",
       "about": "business_description"
@@ -50,6 +52,7 @@ reporting_task:
     Take the research results and email content, then format them as a valid JSON object.
     Include the following fields:
     - email (from research)
+    - website (from research)
     - instagram (from research)
     - facebook (from research)
     - about (from research)
@@ -57,6 +60,7 @@ reporting_task:
   expected_output: >
     {
       "email": "found_email or null",
+      "website": "found_website or null",
       "instagram": "found_instagram or null",
       "facebook": "found_facebook or null",
       "about": "business_description",
