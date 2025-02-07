@@ -4,3 +4,5 @@ __pycache__/
 .venv
 results.json
 gym
+accounting
+uv.lock
