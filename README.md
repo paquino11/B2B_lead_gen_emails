@@ -12,6 +12,8 @@ A streamlit-based application that collects business information using Google Pl
   - Website and social media links
   - Business ratings and reviews
   - Additional business details
+- Email automation
+- Export results to CSV
 
 ## Prerequisites
 
@@ -43,7 +45,6 @@ pip install -r requirements.txt
 pip install 'crewai[tools]'
 ```
 
-
 4. Create a `.env` file in the root directory and add your API keys:
 ```bash
 MODEL=claude-3-5-sonnet-20240620
@@ -70,6 +71,9 @@ streamlit run app.py
    - Then gather detailed information for each business
    - Display results in a real-time updating table
 
+4. Export results:
+   - Click the "Export data as CSV" button to export the collected business data to a CSV file.
+
 ## Data Output
 
 The collected data includes:
@@ -81,6 +85,24 @@ The collected data includes:
 - Business description
 - Physical address
 - Rating and review count
+
+## Email Automation
+
+The application includes an AI-powered email automation feature:
+
+1. For each business, an agent creates a personalized sales email that:
+   - References the business type and specific details
+   - Contains a customized subject line and body
+   - Adapts tone based on the business profile
+
+2. In the web interface:
+   - Each business entry includes a "📧" button
+   - Clicking the button opens your default email client
+   - The email is pre-populated with:
+     - The business's email address
+     - Personalized email content
+
+This feature allows for quick, personalized outreach while maintaining a human touch in the final review and sending process.
 
 ## Project Structure
 

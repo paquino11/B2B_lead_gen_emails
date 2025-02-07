@@ -4,3 +4,4 @@ python-dotenv
 crewai
 crewai-tools 
 langchain-anthropic
+country-list

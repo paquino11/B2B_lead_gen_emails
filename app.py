@@ -54,10 +54,55 @@ def run_get_info_business(business_type):
     return result
 
 def main():
-    st.title("B2B Lead Generator and Email Automation with CrewAI")
+    st.title("🎯 🤖 B2B Lead Generator and Email Automation with CrewAI")
     
-    # Input fields
-    country = st.text_input("Enter country:")
+    # Dictionary of country codes to emoji flags
+    COUNTRY_EMOJIS = {
+        'Afghanistan': '🇦🇫', 'Albania': '🇦🇱', 'Algeria': '🇩🇿', 'Andorra': '🇦🇩', 'Angola': '🇦🇴',
+        'Argentina': '🇦🇷', 'Armenia': '🇦🇲', 'Australia': '🇦🇺', 'Austria': '🇦🇹', 'Azerbaijan': '🇦🇾',
+        'Bahamas': '🇧🇸', 'Bahrain': '🇧🇭', 'Bangladesh': '🇧🇩', 'Barbados': '🇧🇧', 'Belarus': '🇧🇾',
+        'Belgium': '🇧🇪', 'Belize': '🇧🇿', 'Benin': '🇧🇯', 'Bhutan': '🇧🇹', 'Bolivia': '🇧🇴',
+        'Bosnia and Herzegovina': '🇧🇦', 'Botswana': '🇧🇼', 'Brazil': '🇧🇷', 'Brunei': '🇧🇳', 'Bulgaria': '🇧🇬',
+        'Burkina Faso': '🇧🇫', 'Burundi': '🇧🇮', 'Cambodia': '🇰🇭', 'Cameroon': '🇨🇲', 'Canada': '🇨🇦',
+        'Chad': '🇹🇩', 'Chile': '🇨🇱', 'China': '🇨🇳', 'Colombia': '🇨🇴', 'Congo': '🇨🇬',
+        'Costa Rica': '🇨🇷', 'Croatia': '🇭🇷', 'Cuba': '🇨🇺', 'Cyprus': '🇨🇾', 'Czech Republic': '🇨��',
+        'Denmark': '🇩🇰', 'Djibouti': '🇩🇯', 'Dominican Republic': '🇩🇴', 'Ecuador': '🇪🇨', 'Egypt': '🇪🇬',
+        'El Salvador': '🇸🇻', 'Estonia': '🇪🇪', 'Ethiopia': '🇪🇹', 'Fiji': '🇫🇯', 'Finland': '🇫🇮',
+        'France': '🇫🇷', 'Gabon': '🇬🇦', 'Georgia': '🇬🇪', 'Germany': '🇩🇪', 'Ghana': '🇬🇭',
+        'Greece': '🇬🇷', 'Grenada': '🇬🇩', 'Guatemala': '🇬🇹', 'Guinea': '🇬🇳', 'Guyana': '🇬🇾',
+        'Haiti': '🇭🇹', 'Honduras': '🇭🇳', 'Hungary': '🇭🇺', 'Iceland': '🇮🇸', 'India': '🇮🇳',
+        'Indonesia': '🇮🇩', 'Iran': '🇮🇷', 'Iraq': '🇮🇶', 'Ireland': '🇮🇪', 'Israel': '🇮��',
+        'Italy': '🇮🇹', 'Jamaica': '🇯🇲', 'Japan': '🇯🇵', 'Jordan': '🇯🇴', 'Kazakhstan': '🇰🇿',
+        'Kenya': '🇰🇪', 'Kuwait': '🇰🇼', 'Kyrgyzstan': '🇰🇬', 'Laos': '🇱🇦', 'Latvia': '🇱��',
+        'Lebanon': '🇱🇧', 'Lesotho': '🇱🇸', 'Liberia': '🇱🇷', 'Libya': '🇱🇾', 'Liechtenstein': '🇱🇮',
+        'Lithuania': '🇱🇹', 'Luxembourg': '🇱🇺', 'Madagascar': '🇲🇬', 'Malawi': '🇲🇼', 'Malaysia': '🇲🇾',
+        'Maldives': '🇲🇻', 'Mali': '🇲🇱', 'Malta': '🇲🇹', 'Mauritania': '🇲🇷', 'Mauritius': '🇲🇺',
+        'Mexico': '🇲🇽', 'Moldova': '🇲🇩', 'Monaco': '🇲🇨', 'Mongolia': '🇲🇳', 'Montenegro': '🇲🇪',
+        'Morocco': '🇲🇦', 'Mozambique': '🇲🇿', 'Myanmar': '🇲🇲', 'Namibia': '🇳🇦', 'Nepal': '🇳🇵',
+        'Netherlands': '🇳🇱', 'New Zealand': '🇳🇿', 'Nicaragua': '🇳🇮', 'Niger': '🇳🇪', 'Nigeria': '🇳🇬',
+        'North Korea': '🇰🇵', 'North Macedonia': '🇲🇰', 'Norway': '🇳🇴', 'Oman': '🇴🇲', 'Pakistan': '🇵🇰',
+        'Panama': '🇵🇦', 'Papua New Guinea': '🇵🇬', 'Paraguay': '🇵🇾', 'Peru': '🇵🇪', 'Philippines': '🇵🇭',
+        'Poland': '🇵🇱', 'Portugal': '🇵🇹', 'Qatar': '🇶🇦', 'Romania': '🇷🇴', 'Russia': '🇷🇺',
+        'Rwanda': '🇷🇼', 'Saudi Arabia': '🇸🇦', 'Senegal': '🇸🇳', 'Serbia': '🇷🇸', 'Singapore': '🇸🇬',
+        'Slovakia': '🇸🇰', 'Slovenia': '🇸🇮', 'Somalia': '🇸🇴', 'South Africa': '🇿🇦', 'South Korea': '🇰🇷',
+        'Spain': '🇪🇸', 'Sri Lanka': '🇱🇰', 'Sudan': '🇸🇩', 'Sweden': '🇸🇪', 'Switzerland': '🇨🇭',
+        'Syria': '🇸🇾', 'Taiwan': '🇹🇼', 'Tanzania': '🇹🇿', 'Thailand': '🇹🇭', 'Togo': '🇹🇬',
+        'Tunisia': '🇹🇳', 'Turkey': '🇹🇷', 'Uganda': '🇺🇬', 'Ukraine': '🇺🇦', 'United Arab Emirates': '🇦🇪',
+        'United Kingdom': '🇬🇧', 'United States': '🇺🇸', 'Uruguay': '🇺🇾', 'Uzbekistan': '🇺🇿',
+        'Venezuela': '🇻🇪', 'Vietnam': '🇻🇳', 'Yemen': '🇾🇪', 'Zambia': '🇿🇲', 'Zimbabwe': '🇿🇼' 
+    }
+
+    # Create list of countries with emojis
+    countries_with_emojis = [f"{emoji} {country}" for country, emoji in COUNTRY_EMOJIS.items()]
+
+    # Find the index of Sweden in the list
+    default_idx = next((i for i, country in enumerate(countries_with_emojis) if "Sweden" in country), 0)
+
+    # Replace the text input with a selectbox, setting Sweden as default
+    country = st.selectbox("Select country:", countries_with_emojis, index=default_idx)
+    # Extract just the country name without the emoji
+    selected_country = country.split(' ', 1)[1] if country else ''
+    
     districts = st.text_area("Enter district").split('\n')
     
     # Updated business type selection with all Google Places types
@@ -170,7 +215,7 @@ def main():
         if st.button("Start Collection"):
             with st.spinner("Step 1: Collecting businesses..."):
                 try:
-                    scrape_business(districts, country, business_type)
+                    scrape_business(districts, selected_country, business_type)
                     st.success("Step 1: Business collection completed!")
                 except Exception as e:
                     st.error(f"Error in Step 1: {str(e)}")
@@ -192,53 +237,59 @@ def main():
     # Create a placeholder for the results table
     table_placeholder = st.empty()
     
-    # Auto-refresh the results table
-    while True:
-        # Create a unique timestamp for this refresh cycle
-        timestamp = int(time.time())
+    # Use st.empty() to create a container that we can update
+    results_container = st.empty()
+    
+    # Create a refresh button
+    if st.button("Refresh Results"):
+        st.rerun()
+    
+    # Load and display results
+    df = load_results()
+    if not df.empty:
+        # Extract email_subject and email_body from the nested sales_email dictionary
+        df['email_subject'] = df['sales_email'].apply(lambda x: x.get('email_subject') if isinstance(x, dict) else None)
+        df['email_body'] = df['sales_email'].apply(lambda x: x.get('email_body') if isinstance(x, dict) else None)
         
-        df = load_results()
-        if not df.empty:
-            # Extract email_subject and email_body from the nested sales_email dictionary
-            df['email_subject'] = df['sales_email'].apply(lambda x: x.get('email_subject') if isinstance(x, dict) else None)
-            df['email_body'] = df['sales_email'].apply(lambda x: x.get('email_body') if isinstance(x, dict) else None)
-            
-            # Select specific columns to display
-            display_columns = ['name', 'email', 'international_phone_number', 'website', 'instagram', 'facebook', 'about', 'formatted_address', 'rating', 'user_ratings_total']
-            df_display = df[display_columns]
-            
-            # Clear previous content
-            table_placeholder.empty()
-            
-            # Create a new container for this refresh cycle
-            with table_placeholder.container():
-                # Display each row with a send email button
-                for index, row in df_display.iterrows():
-                    col1, col2 = st.columns([1, 11])
-                    with col1:
-                        # Create mailto link with subject and body
-                        email = row['email'] if pd.notna(row['email']) else ''
-                        subject = df.loc[index, 'email_subject'] if pd.notna(df.loc[index, 'email_subject']) else ''
-                        body = df.loc[index, 'email_body'] if pd.notna(df.loc[index, 'email_body']) else ''
-                        
-                        # Create mailto URL with proper encoding
-                        mailto_link = f'mailto:{email}?subject={quote(subject)}&body={quote(body)}'
-                        
-                        if st.button("📧", key=f"email_{index}_{timestamp}"):
-                            # Use open -a Mail command specifically for macOS Mail.app
-                            subprocess.run(['open', '-a', 'Mail', mailto_link])
+        # Select specific columns to display
+        display_columns = ['name', 'email', 'international_phone_number', 'website', 'instagram', 'facebook', 'about', 'formatted_address', 'rating', 'user_ratings_total']
+        df_display = df[display_columns]
+        
+        # Add a button to export the data to CSV
+        csv = df_display.to_csv(index=False)
+        st.download_button(
+            label="Export data as CSV",
+            data=csv,
+            file_name='business_data.csv',
+            mime='text/csv',
+        )
+        
+        # Clear previous content and update with new data
+        with results_container.container():
+            # Display each row with a send email button
+            for index, row in df_display.iterrows():
+                col1, col2 = st.columns([1, 11])
+                with col1:
+                    email = row['email'] if pd.notna(row['email']) else ''
+                    subject = df.loc[index, 'email_subject'] if pd.notna(df.loc[index, 'email_subject']) else ''
+                    body = df.loc[index, 'email_body'] if pd.notna(df.loc[index, 'email_body']) else ''
                     
-                    with col2:
-                        # Display row data
-                        st.write(f"**{row['name']}**")
-                        st.write(f"Email: {row['email']}")
-                        st.write(f"Phone: {row['international_phone_number']}")
-                        st.write(f"Website: {row['website']}")
-                        st.write(f"Address: {row['formatted_address']}")
-                        st.write("---")
-        
-        # Wait for 5 seconds before refreshing
-        time.sleep(5)
+                    mailto_link = f'mailto:{email}?subject={quote(subject)}&body={quote(body)}'
+                    
+                    if st.button("📧", key=f"email_{index}"):
+                        subprocess.run(['open', '-a', 'Mail', mailto_link])
+                
+                with col2:
+                    st.write(f"**{row['name']}**")
+                    st.write(f"Email: {row['email']}")
+                    st.write(f"Phone: {row['international_phone_number']}")
+                    st.write(f"Website: {row['website']}")
+                    st.write(f"Address: {row['formatted_address']}")
+                    st.write("---")
+
+    # Add auto-refresh using st.rerun()
+    time.sleep(5)
+    st.rerun()
 
 if __name__ == "__main__":
     main() 
