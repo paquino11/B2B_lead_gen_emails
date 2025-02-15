@@ -56,166 +56,24 @@ def run_get_info_business(business_type):
 def main():
     st.title("🎯 🤖 B2B Lead Generator and Email Automation with CrewAI")
     
-    # Dictionary of country codes to emoji flags
-    COUNTRY_EMOJIS = {
-        'Afghanistan': '🇦🇫', 'Albania': '🇦🇱', 'Algeria': '🇩🇿', 'Andorra': '🇦🇩', 'Angola': '🇦🇴',
-        'Argentina': '🇦🇷', 'Armenia': '🇦🇲', 'Australia': '🇦🇺', 'Austria': '🇦🇹', 'Azerbaijan': '🇦🇾',
-        'Bahamas': '🇧🇸', 'Bahrain': '🇧🇭', 'Bangladesh': '🇧🇩', 'Barbados': '🇧🇧', 'Belarus': '🇧🇾',
-        'Belgium': '🇧🇪', 'Belize': '🇧🇿', 'Benin': '🇧🇯', 'Bhutan': '🇧🇹', 'Bolivia': '🇧🇴',
-        'Bosnia and Herzegovina': '🇧🇦', 'Botswana': '🇧🇼', 'Brazil': '🇧🇷', 'Brunei': '🇧🇳', 'Bulgaria': '🇧🇬',
-        'Burkina Faso': '🇧🇫', 'Burundi': '🇧🇮', 'Cambodia': '🇰🇭', 'Cameroon': '🇨🇲', 'Canada': '🇨🇦',
-        'Chad': '🇹🇩', 'Chile': '🇨🇱', 'China': '🇨🇳', 'Colombia': '🇨🇴', 'Congo': '🇨🇬',
-        'Costa Rica': '🇨🇷', 'Croatia': '🇭🇷', 'Cuba': '🇨🇺', 'Cyprus': '🇨🇾', 'Czech Republic': '🇨��',
-        'Denmark': '🇩🇰', 'Djibouti': '🇩🇯', 'Dominican Republic': '🇩🇴', 'Ecuador': '🇪🇨', 'Egypt': '🇪🇬',
-        'El Salvador': '🇸🇻', 'Estonia': '🇪🇪', 'Ethiopia': '🇪🇹', 'Fiji': '🇫🇯', 'Finland': '🇫🇮',
-        'France': '🇫🇷', 'Gabon': '🇬🇦', 'Georgia': '🇬🇪', 'Germany': '🇩🇪', 'Ghana': '🇬🇭',
-        'Greece': '🇬🇷', 'Grenada': '🇬🇩', 'Guatemala': '🇬🇹', 'Guinea': '🇬🇳', 'Guyana': '🇬🇾',
-        'Haiti': '🇭🇹', 'Honduras': '🇭🇳', 'Hungary': '🇭🇺', 'Iceland': '🇮🇸', 'India': '🇮🇳',
-        'Indonesia': '🇮🇩', 'Iran': '🇮🇷', 'Iraq': '🇮🇶', 'Ireland': '🇮🇪', 'Israel': '🇮��',
-        'Italy': '🇮🇹', 'Jamaica': '🇯🇲', 'Japan': '🇯🇵', 'Jordan': '🇯🇴', 'Kazakhstan': '🇰🇿',
-        'Kenya': '🇰🇪', 'Kuwait': '🇰🇼', 'Kyrgyzstan': '🇰🇬', 'Laos': '🇱🇦', 'Latvia': '🇱��',
-        'Lebanon': '🇱🇧', 'Lesotho': '🇱🇸', 'Liberia': '🇱🇷', 'Libya': '🇱🇾', 'Liechtenstein': '🇱🇮',
-        'Lithuania': '🇱🇹', 'Luxembourg': '🇱🇺', 'Madagascar': '🇲🇬', 'Malawi': '🇲🇼', 'Malaysia': '🇲🇾',
-        'Maldives': '🇲🇻', 'Mali': '🇲🇱', 'Malta': '🇲🇹', 'Mauritania': '🇲🇷', 'Mauritius': '🇲🇺',
-        'Mexico': '🇲🇽', 'Moldova': '🇲🇩', 'Monaco': '🇲🇨', 'Mongolia': '🇲🇳', 'Montenegro': '🇲🇪',
-        'Morocco': '🇲🇦', 'Mozambique': '🇲🇿', 'Myanmar': '🇲🇲', 'Namibia': '🇳🇦', 'Nepal': '🇳🇵',
-        'Netherlands': '🇳🇱', 'New Zealand': '🇳🇿', 'Nicaragua': '🇳🇮', 'Niger': '🇳🇪', 'Nigeria': '🇳🇬',
-        'North Korea': '🇰🇵', 'North Macedonia': '🇲🇰', 'Norway': '🇳🇴', 'Oman': '🇴🇲', 'Pakistan': '🇵🇰',
-        'Panama': '🇵🇦', 'Papua New Guinea': '🇵🇬', 'Paraguay': '🇵🇾', 'Peru': '🇵🇪', 'Philippines': '🇵🇭',
-        'Poland': '🇵🇱', 'Portugal': '🇵🇹', 'Qatar': '🇶🇦', 'Romania': '🇷🇴', 'Russia': '🇷🇺',
-        'Rwanda': '🇷🇼', 'Saudi Arabia': '🇸🇦', 'Senegal': '🇸🇳', 'Serbia': '🇷🇸', 'Singapore': '🇸🇬',
-        'Slovakia': '🇸🇰', 'Slovenia': '🇸🇮', 'Somalia': '🇸🇴', 'South Africa': '🇿🇦', 'South Korea': '🇰🇷',
-        'Spain': '🇪🇸', 'Sri Lanka': '🇱🇰', 'Sudan': '🇸🇩', 'Sweden': '🇸🇪', 'Switzerland': '🇨🇭',
-        'Syria': '🇸🇾', 'Taiwan': '🇹🇼', 'Tanzania': '🇹🇿', 'Thailand': '🇹🇭', 'Togo': '🇹🇬',
-        'Tunisia': '🇹🇳', 'Turkey': '🇹🇷', 'Uganda': '🇺🇬', 'Ukraine': '🇺🇦', 'United Arab Emirates': '🇦🇪',
-        'United Kingdom': '🇬🇧', 'United States': '🇺🇸', 'Uruguay': '🇺🇾', 'Uzbekistan': '🇺🇿',
-        'Venezuela': '🇻🇪', 'Vietnam': '🇻🇳', 'Yemen': '🇾🇪', 'Zambia': '🇿🇲', 'Zimbabwe': '🇿🇼' 
-    }
-
-    # Create list of countries with emojis
-    countries_with_emojis = [f"{emoji} {country}" for country, emoji in COUNTRY_EMOJIS.items()]
-
-    # Find the index of Sweden in the list
-    default_idx = next((i for i, country in enumerate(countries_with_emojis) if "Sweden" in country), 0)
-
-    # Replace the text input with a selectbox, setting Sweden as default
-    country = st.selectbox("Select country:", countries_with_emojis, index=default_idx)
-    # Extract just the country name without the emoji
-    selected_country = country.split(' ', 1)[1] if country else ''
+    # Text input for city
+    city = st.text_input("Enter city name:", placeholder="e.g., New York")
     
-    districts = st.text_area("Enter district").split('\n')
-    
-    # Updated business type selection with all Google Places types
-    business_type = st.selectbox(
-        "Select business type:",
-        [
-            "accounting",
-            "airport",
-            "amusement_park",
-            "aquarium",
-            "art_gallery",
-            "atm",
-            "bakery",
-            "bank",
-            "bar",
-            "beauty_salon",
-            "bicycle_store",
-            "book_store",
-            "bowling_alley",
-            "bus_station",
-            "cafe",
-            "campground",
-            "car_dealer",
-            "car_rental",
-            "car_repair",
-            "car_wash",
-            "casino",
-            "cemetery",
-            "church",
-            "city_hall",
-            "clothing_store",
-            "convenience_store",
-            "courthouse",
-            "dentist",
-            "department_store",
-            "doctor",
-            "drugstore",
-            "electrician",
-            "electronics_store",
-            "embassy",
-            "fire_station",
-            "florist",
-            "funeral_home",
-            "furniture_store",
-            "gas_station",
-            "gym",
-            "hair_care",
-            "hardware_store",
-            "hindu_temple",
-            "home_goods_store",
-            "hospital",
-            "insurance_agency",
-            "jewelry_store",
-            "laundry",
-            "lawyer",
-            "library",
-            "light_rail_station",
-            "liquor_store",
-            "local_government_office",
-            "locksmith",
-            "lodging",
-            "meal_delivery",
-            "meal_takeaway",
-            "mosque",
-            "movie_rental",
-            "movie_theater",
-            "moving_company",
-            "museum",
-            "night_club",
-            "painter",
-            "park",
-            "parking",
-            "pet_store",
-            "pharmacy",
-            "physiotherapist",
-            "plumber",
-            "police",
-            "post_office",
-            "primary_school",
-            "real_estate_agency",
-            "restaurant",
-            "roofing_contractor",
-            "rv_park",
-            "school",
-            "secondary_school",
-            "shoe_store",
-            "shopping_mall",
-            "spa",
-            "stadium",
-            "storage",
-            "store",
-            "subway_station",
-            "supermarket",
-            "synagogue",
-            "taxi_stand",
-            "tourist_attraction",
-            "train_station",
-            "transit_station",
-            "travel_agency",
-            "university",
-            "veterinary_care",
-            "zoo"
-        ]
-    )
+    # Text input for business type
+    business_type = st.text_input("Enter business type:", placeholder="e.g., restaurant, accounting, retail")
     
     # Create two columns
     col1, col2 = st.columns([2, 1])
     
     with col1:
         if st.button("Start Collection"):
+            if not city or not business_type:
+                st.error("Please enter both city and business type.")
+                return
+                
             with st.spinner("Step 1: Collecting businesses..."):
                 try:
-                    scrape_business(districts, selected_country, business_type)
+                    scrape_business(city, business_type)
                     st.success("Step 1: Business collection completed!")
                 except Exception as e:
                     st.error(f"Error in Step 1: {str(e)}")
