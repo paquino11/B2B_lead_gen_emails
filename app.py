@@ -110,7 +110,7 @@ def main():
         df['email_body'] = df['sales_email'].apply(lambda x: x.get('email_body') if isinstance(x, dict) else None)
         
         # Select specific columns to display
-        display_columns = ['name', 'email', 'international_phone_number', 'website', 'instagram', 'facebook', 'about', 'formatted_address', 'rating', 'user_ratings_total']
+        display_columns = ['title', 'email', 'phoneNumber', 'website', 'instagram', 'facebook', 'about', 'address', 'rating', 'ratingCount']
         df_display = df[display_columns]
         
         # Add a button to export the data to CSV
@@ -138,11 +138,11 @@ def main():
                         subprocess.run(['open', '-a', 'Mail', mailto_link])
                 
                 with col2:
-                    st.write(f"**{row['name']}**")
+                    st.write(f"**{row['title']}**")
                     st.write(f"Email: {row['email']}")
-                    st.write(f"Phone: {row['international_phone_number']}")
+                    st.write(f"Phone: {row['phoneNumber']}")
                     st.write(f"Website: {row['website']}")
-                    st.write(f"Address: {row['formatted_address']}")
+                    st.write(f"Address: {row['address']}")
                     st.write("---")
 
     # Add auto-refresh using st.rerun()

@@ -26,7 +26,7 @@ def get_project_root():
 def load_business_data(business_type):
     """Load business data from JSON files in scrape_businesses directory."""
     project_root = get_project_root()
-    base_path = project_root / "scrape_businesses" / business_type
+    base_path = project_root / "scrape_businesses" / "businesses"
     
     if not base_path.exists():
         raise Exception(f"Directory not found: {base_path}")
@@ -71,7 +71,7 @@ def append_to_results(business_data):
         results = []
     
     # Check if business already exists in results
-    business_exists = any(b.get('name') == business_data.get('name') for b in results)
+    business_exists = any(b.get('title') == business_data.get('title') for b in results)
     
     if not business_exists:
         # Append new data
@@ -86,8 +86,8 @@ def process_business(business, business_type):
     try:
         inputs = {
             'business_type': business_type,
-            'business_name': business['name'],
-            'business_address': business['formatted_address'],
+            'business_name': business['title'],
+            'business_address': business['address'],
             'business_website': business.get('website', 'Not available'),
             'business_about': business.get('about', ''),
             'current_year': str(datetime.now().year)
@@ -110,7 +110,7 @@ def process_business(business, business_type):
         return complete_data
         
     except Exception as e:
-        print(f"Error processing business {business['name']}: {e}")
+        print(f"Error processing business {business['title']}: {e}")
         return business
 
 def run():
@@ -124,7 +124,7 @@ def run():
     try: 
         businesses = load_business_data(business_type)
         for business in businesses:
-            print(f"\nProcessing business: {business['name']}")
+            print(f"\nProcessing business: {business['title']}")
             process_business(business, business_type)
             
     except Exception as e:
