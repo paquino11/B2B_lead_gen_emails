@@ -6,7 +6,7 @@ import os
 from datetime import datetime
 from pathlib import Path
 
-from get_info_business.crew import GetInfoBusiness
+from get_info_business.crew import GetInfoBusiness, setup_ai_provider
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
@@ -121,12 +121,19 @@ def run():
     else:
         business_type = "bar"  # Default fallback value
         
-    try: 
+    try:
+        # Verify AI provider is properly set up
+        provider = setup_ai_provider()
+        print(f"Using AI provider: {provider}")
+        
         businesses = load_business_data(business_type)
         for business in businesses:
             print(f"\nProcessing business: {business['title']}")
             process_business(business, business_type)
             
+    except ValueError as ve:
+        print(f"Error with AI provider setup: {ve}")
+        sys.exit(1)
     except Exception as e:
         raise Exception(f"An error occurred while running the crew: {e}")
 
