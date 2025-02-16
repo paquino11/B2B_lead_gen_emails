@@ -4,8 +4,24 @@ from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import SerperDevTool
 from dotenv import load_dotenv
-load_dotenv()
 
+def setup_ai_provider():
+	"""Setup AI provider based on environment variables."""
+	load_dotenv()
+	
+	# Check for available providers
+	providers = {
+		'ANTHROPIC_API_KEY': 'anthropic',
+		'MISTRAL_API_KEY': 'mistral',
+		'OPENAI_API_KEY': 'openai'
+	}
+	
+	for api_key, provider in providers.items():
+		if os.getenv(api_key):
+			os.environ['CREWAI_LLM'] = provider
+			return provider
+			
+	raise ValueError("No valid AI provider found. Please set ANTHROPIC_API_KEY, MISTRAL_API_KEY, or OPENAI_API_KEY in your environment variables.")
 
 @CrewBase
 class GetInfoBusiness():
@@ -15,10 +31,12 @@ class GetInfoBusiness():
 	tasks_config = 'config/tasks.yaml'
 	output_file = None
 
+	# Setup AI provider before initializing
+	ai_provider = setup_ai_provider()
+	
+	# Setup Serper API
 	os.environ['SERPER_API_KEY'] = os.getenv('SERPER_API_KEY')
-
 	serper_tool = SerperDevTool()
-
 
 	def set_output_file(self, filename):
 		self.output_file = filename
